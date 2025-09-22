@@ -1,3 +1,44 @@
-debug sample for IMSVA 
-sept 22
+Debugging IMSVA Postfix
+
+IMSVA relies on Postfix for both incoming and outgoing emails. When troubleshooting mail issues, it is recommended to enable debug mode in Postfix to get detailed logging.
+
+1. Enable Debug Mode for Postfix
+
+Open the Postfix configuration file:
+
+/opt/trend/imss/postfix/etc/postfix/master.cf
+
+
+Locate the line that starts with imss unix. It should look like this:
+
+imss unix - - n - 100 smtp
+
+
+Add the -v flag to make it verbose. The modified line should be:
+
+imss unix - - n - 100 smtp -v
+    -o disable_dns_lookups=yes
+
+
+Note: The -v flag enables verbose logging. The disable_dns_lookups=yes option can remain as is.
+
+2. Reload Postfix
+
+After making changes, reload Postfix to apply the new configuration:
+
+# postfix reload
+
+3. View Debug Output
+
+Once Postfix is running in debug mode, you can view the logs here:
+
+/var/log/maillog
+
+
+These logs will contain detailed information about incoming and outgoing mail processes.
+
+4. Debugging Other Modules
+
+Other IMSVA modules can be debugged using the IMSVA Console. The console provides additional logging and troubleshooting capabilities beyond Postfix.
+
 
